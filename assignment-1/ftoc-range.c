@@ -1,10 +1,10 @@
 
-//	ftoc-range.c	will take arguments from the user, otherwise		//		| Faranheit || Celcius |
-//	it will prompt them for numerical input. Computer will				//		|        200||    ...  |	
-//	check to make sure input is number, and then it will				//		|			||		   |
-//	print a table of Faranheit values increasing by five				//		. 			.. 		   .
-//	along side their Celcius counterparts. 								//		.           .. 		   .
-//																		//		. 			.. 		   .
+//	ftoc-range.c	will take arguments from the user, otherwise
+//	it will prompt them for numerical input. Computer will	
+//	check to make sure input is number, and then it will
+//	print a table of Faranheit values increasing by five
+//	along side their Celcius counterparts. 
+//
 //	Created by Nick Chapman, 9-18-2026
 //
 //	NOTES:
@@ -39,18 +39,10 @@ int isNumeric(char* s, double *output) {
 	//	is actually part of a number string.
 
 	//	dpcount will increment for every '.' found.
-	//	Loop will ignore ','.
-	//
-	//	Perhaps I can make an accomidating version with a flag
-	//	that switches to EU mode so you can type 1.000.000,2
-	//	instead of 1,000,000.2
-	//
-	//	Perhaps I am just making this more complicated than
-	//	it needs to be... I was crazy once...
 	//
 	int dpCount = 0;
 	int asciiValue = 0;
-
+	
 	char* cursor = s;
 	while (*cursor != '\0') {
 		asciiValue = (char)*cursor;
@@ -85,9 +77,13 @@ double ftoc(double f) {
 	return  ((f - 32.0) * 5.0) / 9.0;
 }
 
+//	Takes a base degrees in Faranheit, and a number
+//	of iterations, and then prints a table with
+//	as many steps of five f then coverting to c.
+//		
 void ftocList(double f, int iterations) {
 
-	printf("\n\t|  Faranheit\t Celcius    |\n");
+	printf("\n\t|    Faranheit\t   Celcius  |\n");
 	printf("\t|***************************|\n");
 	double tmp = 0.0;
 	
@@ -95,10 +91,12 @@ void ftocList(double f, int iterations) {
 
 		tmp = (i * 5) + f;
 		
-		printf("\t| %11.1lf\t%11.1lf |\n", tmp, ftoc(tmp));
+		printf("\t| %11.2lf\t%11.2lf |\n", tmp, ftoc(tmp));
 	}
 }
 
+//	Entry point
+//
 int main (int argc, char** argv) {
 
 	//	Pointer to whichever string is being used for input
@@ -123,6 +121,8 @@ int main (int argc, char** argv) {
 	//	Third Option is if there are exactly two arguments
 	//
 	else if (argc == 2) {
+		//	Sets instring to first argument
+		//
 		instring = argv[1];
 	}
 	//	Then Lastly, if you want to change the amount of iterations.
@@ -130,8 +130,12 @@ int main (int argc, char** argv) {
 	//	This is the value being changed with three agruments.
 	//
 	else if (argc == 3) {
+		//	Sets instring to first argument
+		//
 		instring = argv[1];
 
+		//	Sets number of iterations if not NaN
+		//
 		int tmp = atoi(argv[2]);
 		if (tmp > 0) {
 			iterations = tmp;
@@ -166,9 +170,14 @@ int main (int argc, char** argv) {
 	PROMPT_USR:
 	//
 	
+	//	Prompt user for input in Faranheit
+	//	
 	char buffer[50];
 	printf("Enter degrees in Faranheit: ");
 	scanf("%s", buffer);
+	//
+	//	Sets instring to the user input
+	//
 	instring = buffer;
 
 	//	Return to continue program
