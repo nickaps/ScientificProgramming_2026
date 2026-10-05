@@ -1,0 +1,62 @@
+
+hello.obj:     file format pe-x86-64
+
+
+Disassembly of section .text$mn:
+
+0000000000000000 <main>:
+   0:	48 83 ec 28          	sub    $0x28,%rsp
+   4:	48 8d 0d 00 00 00 00 	lea    0x0(%rip),%rcx        # b <main+0xb>
+   b:	e8 00 00 00 00       	call   10 <main+0x10>
+  10:	33 c0                	xor    %eax,%eax
+  12:	48 83 c4 28          	add    $0x28,%rsp
+  16:	c3                   	ret
+
+Disassembly of section .text$mn:
+
+0000000000000000 <__local_stdio_printf_options>:
+   0:	48 8d 05 00 00 00 00 	lea    0x0(%rip),%rax        # 7 <__local_stdio_printf_options+0x7>
+   7:	c3                   	ret
+
+Disassembly of section .text$mn:
+
+0000000000000000 <_vfprintf_l>:
+   0:	4c 89 4c 24 20       	mov    %r9,0x20(%rsp)
+   5:	4c 89 44 24 18       	mov    %r8,0x18(%rsp)
+   a:	48 89 54 24 10       	mov    %rdx,0x10(%rsp)
+   f:	48 89 4c 24 08       	mov    %rcx,0x8(%rsp)
+  14:	48 83 ec 38          	sub    $0x38,%rsp
+  18:	e8 00 00 00 00       	call   1d <_vfprintf_l+0x1d>
+  1d:	48 8b 4c 24 58       	mov    0x58(%rsp),%rcx
+  22:	48 89 4c 24 20       	mov    %rcx,0x20(%rsp)
+  27:	4c 8b 4c 24 50       	mov    0x50(%rsp),%r9
+  2c:	4c 8b 44 24 48       	mov    0x48(%rsp),%r8
+  31:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+  36:	48 8b 08             	mov    (%rax),%rcx
+  39:	e8 00 00 00 00       	call   3e <_vfprintf_l+0x3e>
+  3e:	48 83 c4 38          	add    $0x38,%rsp
+  42:	c3                   	ret
+
+Disassembly of section .text$mn:
+
+0000000000000000 <printf>:
+   0:	48 89 4c 24 08       	mov    %rcx,0x8(%rsp)
+   5:	48 89 54 24 10       	mov    %rdx,0x10(%rsp)
+   a:	4c 89 44 24 18       	mov    %r8,0x18(%rsp)
+   f:	4c 89 4c 24 20       	mov    %r9,0x20(%rsp)
+  14:	48 83 ec 38          	sub    $0x38,%rsp
+  18:	48 8d 44 24 48       	lea    0x48(%rsp),%rax
+  1d:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+  22:	b9 01 00 00 00       	mov    $0x1,%ecx
+  27:	e8 00 00 00 00       	call   2c <printf+0x2c>
+  2c:	4c 8b 4c 24 28       	mov    0x28(%rsp),%r9
+  31:	45 33 c0             	xor    %r8d,%r8d
+  34:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+  39:	48 8b c8             	mov    %rax,%rcx
+  3c:	e8 00 00 00 00       	call   41 <printf+0x41>
+  41:	89 44 24 20          	mov    %eax,0x20(%rsp)
+  45:	48 c7 44 24 28 00 00 	movq   $0x0,0x28(%rsp)
+  4c:	00 00 
+  4e:	8b 44 24 20          	mov    0x20(%rsp),%eax
+  52:	48 83 c4 38          	add    $0x38,%rsp
+  56:	c3                   	ret
