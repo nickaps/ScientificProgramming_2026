@@ -17,7 +17,7 @@
 //
 //	usage: piecewise.exe <START> <END> [PRECISION]
 //	                                 ___
-//	   ,- B          __              \  |  N       /  i * (B - A)   \       1       *We use Left Hand rectangular Riemann sum
+//	   .- B          __              \  |  N       /  i * (B - A)   \       1       *We use Left Hand rectangular Riemann sum
 //	  / 	f(x)dx   __      lim      )         f | ------------ + A |  x  ---
 //	-'  A                  N -> inf. /__| i=0      \      N         /       N
 //
@@ -100,9 +100,9 @@ double _IntegratedFunction(double x) {
 	//
 	//	...also:
 	//
-	//	   	b /
-	//	y =	 | f(x)dx
-	//	   	/ a
+	//	    b .-
+	//	y =	 /   f(x)dx
+	//	   -' a
 	//
 
 	//	Returning Macro'd Function
