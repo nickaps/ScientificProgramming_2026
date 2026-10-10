@@ -17,14 +17,13 @@ double DistanceFromCenter(double x, double y) {
 
 double RandPercent() {
 	int rint = rand();
-	printf("%d\n", rint);
-	return (rint / (double)RAND_MAX);
+	return (double)((double)rint / (double)RAND_MAX);
 }
 
 int main(int argc, char** argv) {
 
 	if (argc != 3) {
-		printf("invalid. usage: pi <DOT_COUNT> <SEED>");
+		printf("invalid. usage: pi <DOT_COUNT> <SEED>\n");
 		return 1;
 	}
 
@@ -55,9 +54,9 @@ int main(int argc, char** argv) {
 		i++;
 	}
 
-	double estimation  = ((double)n_hit / (double)dcount) * 4;
+	double estimation = ((double)n_hit / (double)dcount) * 4;
 
-	printf("The constant PI is estimated at: %lf %lf", n_hit, dcount);
+	printf("The constant PI is estimated at: %lf\n", estimation);
 
 	return 0;
 }
