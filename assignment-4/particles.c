@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 //	Cross Platform Screen Clear
 //
@@ -73,7 +74,7 @@ void DisplayList(ListNode** list);
 int OpenList(char* fname);
 int CloseList();
 int SaveList(char* fname);
-void DeleteList();
+int DeleteList();
 void PushPrompt();
 void Pop();
 void Pick(int index);
@@ -307,22 +308,48 @@ int SaveList(char* fname) {
 	return 0;
 }
 
-void DeleteList() {
-	//	TODO: figure out how to universally
-	//			delete files.
+int DeleteList() {
+	if (fptr == NULL) {
+		printf("invalid. no file currently opened.\n");
+		return 1;
+	}
+
+	printf("are you sure you want to delete \"%s\"? (Y/n) ", currentTable);
+	
+	char answer[5];
+	if (fgets(answer, sizeof(answer), stdin)) {
+		char tok = tolower(answer[0]);
+		answer[0] = tok;
+	}
+	if (answer[0] != 'y') {
+		return 0;
+	}
+	
+	char fpath[100];
+	snprintf(fpath, sizeof(fpath), "./%s.csv", currentTable);
+	
+	if (remove(fpath) == 0) {
+		printf("successfully deleted table.\n");
+	}
+	else {
+		printf("failed to remove table at \"%s\"\n", currentTable);
+	}
+
+	CloseList(&list);
+
+	return 0;
 }
 //
 void PushPrompt() {
-	if (list == NULL) {
-		printf("Empty table.");
-		return;
-	}
-
 	Particle* data = PromptForParticle();
 	AddNode(&list, data);
 }
 //
 void Pop() {
+	if (list == NULL) {
+		printf("Empty table.\n");
+	}
+
 	ListNode* ptr = list;
 	while (ptr->next->next != NULL) {
 		ptr = ptr->next;
@@ -497,6 +524,14 @@ void _INTERPRET_COMMAND(char* cmd) {
 		else if (argc == 2) {
 			SaveList(args[1]);
 		}
+		return;
+	}
+	if (strcmp(args[0], "delete") == 0) {
+		if (argc != 1) {
+			printf("invalid. usage: delete\n");
+			return;
+		}
+		DeleteList();
 		return;
 	}
 }
