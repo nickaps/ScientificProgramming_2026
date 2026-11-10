@@ -7,6 +7,12 @@
 //
 //	Created by Nick Chapman, 11-7-2026
 //
+//
+//
+//                             |  Grade Received   |
+//                             |      | ___%|      |
+#define __FINAL_MARK                    "??"
+//
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,12 +41,12 @@ typedef struct ListNode ListNode;
 //	
 //	Particle Struct contains
 //		- Name
-//		- Mass (in MeV)
+//		- Mass (in MeV/c^2)
 //		- Charge (measured in thirds of the magnitude of an electron)
 //		- Spin (measured in increments of halves to include all particles)
 //		
 struct Particle {
-	char name[15];
+	char name[30];
 	double mass;
 	int thirdCharge;
 	int halfSpin; 
@@ -83,6 +89,7 @@ void _CLI_PROMPT(char* buffer, size_t bufferSize);
 void _PARTICLE_CLI();
 void _DISPLAY_HELP();
 void _WELCOME_SCREEN();
+void _PROJECT_SUMMARY();
 void _INTERPRET_COMMAND(char* cmd);
 //
 
@@ -163,11 +170,11 @@ void DisplayList(ListNode** list) {
 		printf("Empty table.\n");
 		return;
 	}
-	printf("\t%5s || \t%15s | %22s | %9s | %9s |\n", "INDEX", "NAME", "MASS (MeV)", "CHARGE", "SPIN");
+	printf("\t%5s || \t%15s | %22s     | %9s | %9s |\n", "INDEX", "NAME", "MASS (MeV/c^2)", "CHARGE", "SPIN");
 	int i = 0;
 	while (ptr != NULL) {
 		Particle* p = ptr->dataLink;
-		printf("\t%5d || \t%15s | ~%15.5f (MeV) | %9f | %9f |\n", i, p->name, p->mass, (double)(p->thirdCharge)/3.0, (double)(p->halfSpin)/2.0);
+		printf("\t%5d || \t%15s | ~%15.5f (MeV/c^2) | %9f | %9f |\n", i, p->name, p->mass, (double)(p->thirdCharge)/3.0, (double)(p->halfSpin)/2.0);
 		ptr = ptr->next;
 		i++;
 	}
@@ -382,6 +389,37 @@ void _WELCOME_SCREEN() {
 	printf("\n");
 }
 //
+void _PROJECT_SUMMARY() {
+
+	printf("\n");
+	printf("\t\tSelf-Assessment of Assignment 4\n");
+	printf("\n");
+	
+	printf("\tIf this were a perfect project, I would include some more operations to\n");
+	printf("\tthe toolbox such as insert to insert Particles between others in the list,\n");
+	printf("\tstitch to stitch one table to the end of another, and splice to insert an\n");
+	printf("\tentire table in the middle of another. I think that I should have began this\n");
+	printf("\tproject earlier as I continued to procrastinate until it was already too late.\n");
+	printf("\tFunctionally I believe this program is admissable, but it could be expanded upon.\n");
+	printf("\tMore than just adding new tools: I would like to allow the user to make tables\n");
+	printf("\tof any type that use a 0 line header to read what the property name is and what\n");
+	printf("\tthe data-type is. For instance, this could be one of many different kinds of\n");
+	printf("\ttables that has a header like:\n");
+	printf("\t\t\"Name:str,Mass:double,Charge:int,Spin:int\"\n");
+
+	printf("\n");
+	printf("\tI also think it would be cool if I added a gen command which would create\n");
+	printf("\ta csv file with hardcoded information for the standard model. Another thing\n");
+	printf("\tthat always comes to mind is the way I work with charges and spins in this.\n");
+	printf("\tI think I should have made a way to work with fractions so that you can enter\n");
+	printf("\tthem like \"1/2\" or \"2/3\" and it would parse them into either num/dem in\n");
+	printf("\tthe file, or as a double that represents them in the file.\n");
+	printf("\tIt would look a lot better and be more intuitive if I used fractions for inputting\n");
+	printf("\tand displaying the charge and spin.\n");
+
+	printf("\t\t[RECEIVED: %s / 100]\n", __FINAL_MARK);
+}
+//
 void _DISPLAY_HELP() {
 
 	printf("\n\tThe following commands are used to view, update and delete");
@@ -389,7 +427,8 @@ void _DISPLAY_HELP() {
 	printf("\n\tWhen adding values to your table remember that--in order to");
 	printf("\n\taccommodate all standard model particles--charge will be entered");
 	printf("\n\tin thirds of the magnitude of charge of an electron, and");
-	printf("\n\tspin will be entered in half intervals.");
+	printf("\n\tspin will be entered in half intervals. Mass is simply entered as a");
+	printf("\n\tdouble in units of MeV/c^2.");
 	printf("\n\tCharge:  -3 = -1(e-), 2 = 2/3(e-)\tSpin:  1 = 1/2, 4 = 4/2 = 2");
 	
 	printf("\n");
@@ -408,6 +447,9 @@ void _DISPLAY_HELP() {
 	printf("\n\tdelete - delete a table file permanently");
 
 	printf("\n");
+	printf("\n\ttype: project-summary for a description of things I would add or change if I further work on this project.\n");
+
+	printf("\n");
 }
 //
 void _CLI_PROMPT(char* buffer, size_t bufferSize) {
@@ -419,6 +461,8 @@ void _CLI_PROMPT(char* buffer, size_t bufferSize) {
 }
 //
 void _INTERPRET_COMMAND(char* cmd) {
+
+	if (strcmp(cmd, "\n") == 0) return;
 
 	#define _MAX_ARGS 10
 	
@@ -534,6 +578,16 @@ void _INTERPRET_COMMAND(char* cmd) {
 		DeleteList();
 		return;
 	}
+	if (strcmp(args[0], "project-summary") == 0) {
+		if (argc != 1) {
+			printf("invalid. usage: project-summary");
+			return;
+		}
+		_PROJECT_SUMMARY();
+		return;
+	}
+
+	printf("\"%s\" is not a known command.\n", args[0]);
 }
 //
 //	_PARTICLE_CLI() is a method that will loop
